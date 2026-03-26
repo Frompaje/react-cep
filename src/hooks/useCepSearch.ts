@@ -19,6 +19,9 @@ export function useCepSearch() {
       const data = await searchCepsByRadius(params)
       console.log('[cep-search] Hook success data', data)
       setResult(data)
+      toast.success('ZIP code search completed successfully.', {
+        description: `${data.total} ZIP codes found.`,
+      })
     } catch (error) {
       setResult(null)
       if (error instanceof ApiError) {
