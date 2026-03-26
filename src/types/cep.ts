@@ -3,16 +3,9 @@ export interface CepSearchParams {
   radiusKm: number
 }
 
-export interface CepSearchItem {
-  zipCode: string
-  distanceKm: number | null
-  latitude: number | null
-  longitude: number | null
-}
-
-export interface CepSearchResponse {
-  originCep: string
-  radiusKm: number
+export interface CepRadiusResponse {
+  cepOrigem: string
+  raioKm: number
   total: number
-  results: CepSearchItem[]
+  ceps: string[]
 }

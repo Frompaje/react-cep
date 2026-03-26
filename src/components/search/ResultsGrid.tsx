@@ -1,9 +1,9 @@
-import type { CepSearchResponse } from '../../types/cep'
+import type { CepRadiusResponse } from '../../types/cep'
 import { CepCard } from './CepCard'
 import { Skeleton } from '../ui/skeleton'
 
 interface ResultsGridProps {
-  data: CepSearchResponse | null
+  data: CepRadiusResponse | null
   isLoading: boolean
   hasSearched: boolean
 }
@@ -16,7 +16,7 @@ export function ResultsGrid({ data, isLoading, hasSearched }: ResultsGridProps) 
           <h2 className="text-xl font-semibold text-slate-900">Results</h2>
           {data && (
             <p className="text-xs text-slate-500">
-              Origin: {data.originCep} | Radius: {data.radiusKm} km | ZIP list from backend
+              Origin: {data.cepOrigem} | Radius: {data.raioKm} km
             </p>
           )}
         </div>
@@ -37,15 +37,15 @@ export function ResultsGrid({ data, isLoading, hasSearched }: ResultsGridProps) 
         </div>
       )}
 
-      {!isLoading && data && data.results.length > 0 && (
+      {!isLoading && data && data.ceps.length > 0 && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {data.results.map((item) => (
-            <CepCard key={item.zipCode} item={item} />
+          {data.ceps.map((zipCode) => (
+            <CepCard key={zipCode} zipCode={zipCode} />
           ))}
         </div>
       )}
 
-      {!isLoading && hasSearched && (!data || data.results.length === 0) && (
+      {!isLoading && hasSearched && (!data || data.ceps.length === 0) && (
         <div className="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
           No ZIP codes were found for the selected radius.
         </div>

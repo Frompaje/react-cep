@@ -1,73 +1,81 @@
-# React + TypeScript + Vite
+# ZipRange Locator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend em React + TypeScript para busca de CEPs por raio, consumindo a API backend.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js `20.19+` ou `22.12+`
+- npm `10+`
+- Backend rodando com endpoint `GET /ceps/radius`
 
-## React Compiler
+## Como baixar o projeto
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone <url-do-repositorio>
+cd react-cep
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Como instalar
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+## Configurar ambiente
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+`VITE_API_URL` deve apontar para a URL base da API backend.
+
+## Como usar
+
+Inicie o projeto:
+
+```bash
+npm run dev
+```
+
+Abra no navegador:
+
+`http://localhost:5173`
+
+## Contrato da API usado no frontend
+
+### Requisição
+
+`GET /ceps/radius?cep=69005010&raioKm=4`
+
+### Exemplo de resposta
+
+```json
+{
+  "cepOrigem": "69010300",
+  "raioKm": 10,
+  "total": 14,
+  "ceps": [
+    "69005010",
+    "69005110",
+    "69010060"
+  ]
+}
+```
+
+## Scripts úteis
+
+- `npm run dev`: inicia em desenvolvimento
+- `npm run build`: gera build de produção
+- `npm run preview`: serve build localmente
+- `npm run lint`: roda lint
+
+## Funcionalidades
+
+- Formulário com validação (`react-hook-form` + `zod`)
+- Busca por CEP de origem e raio
+- Exibição de resultados em cards
+- Telemetria de RTT no frontend
+- Toaster para sucesso e erro
+- Loading com Skeleton
